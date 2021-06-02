@@ -1,0 +1,43 @@
+:root {
+    --border-color: black;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-container {
+    width: 600px;
+    height: 600px;
+    /* width: clamp(); */
+    
+    display: grid;
+}
+
+.grid-row {
+    display: grid;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.grid-row:nth-child(1) {
+    border-top: 1px solid var(--border-color);
+}
+
+.grid-item {
+    border-right: 1px solid var(--border-color);
+}
+
+.grid-item:nth-child(1) {
+    border-left: 1px solid var(--border-color);
+}
+
