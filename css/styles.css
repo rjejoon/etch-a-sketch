@@ -23,11 +23,21 @@ body {
     /* width: clamp(); */
     
     display: grid;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .grid-row {
     display: grid;
     border-bottom: 1px solid var(--border-color);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .grid-row:nth-child(1) {
@@ -36,6 +46,11 @@ body {
 
 .grid-item {
     border-right: 1px solid var(--border-color);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .grid-item:nth-child(1) {

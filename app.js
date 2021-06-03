@@ -3,7 +3,12 @@ const DEFAULT_GRID_DIMENSION = 16;
 const gridContainer = document.querySelector('.grid-container');
 const gridSizeSlider = document.querySelector('#grid-size-slider');
 
+window.addEventListener('load', () => {
+    drawGrid(DEFAULT_GRID_DIMENSION);
+});
+
 let isMouseDown = false;
+let pixelColor = "ffb3b3";
 
 gridSizeSlider.addEventListener('mousemove', e => {
     if (!isMouseDown) return;
@@ -11,12 +16,9 @@ gridSizeSlider.addEventListener('mousemove', e => {
     const gridDimension = parseInt(e.target.value);
     drawGrid(gridDimension);
 });
-gridSizeSlider.addEventListener('mouseup', () => isMouseDown = false);
-gridSizeSlider.addEventListener('mousedown', () => isMouseDown = true);
 
 window.addEventListener('mouseup', () => isMouseDown = false);
-
-
+window.addEventListener('mousedown', () => isMouseDown = true);
 
 
 function drawGrid(gridDimension) {
@@ -35,12 +37,20 @@ function drawGrid(gridDimension) {
         for (let j=0; j<gridDimension; j++) {
             const gridItem = document.createElement('div');
             gridItem.classList.add('grid-item');
+            gridItem.addEventListener('mousemove', fillPixel);
+
+
+
             gridRow.appendChild(gridItem);
         }
     }
 }
 
+function fillPixel(e) {
+    if (!isMouseDown) return;
 
-drawGrid(DEFAULT_GRID_DIMENSION);
+    this.style.backgroundColor = `#${pixelColor}`;
+}
+
 
 
