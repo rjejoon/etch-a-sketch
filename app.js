@@ -8,7 +8,12 @@ window.addEventListener('load', () => {
 });
 
 let isMouseDown = false;
-let pixelColor = "ffb3b3";
+let lastPixel = null;
+
+let hue = 0;
+let hueIncr = 2;
+const saturation = 100;
+const lightness = 85;
 
 gridSizeSlider.addEventListener('mousemove', e => {
     if (!isMouseDown) return;
@@ -48,11 +53,16 @@ function drawGrid(gridDimension) {
 
 function fillPixelOnMove(e) {
     if (!isMouseDown) return;
-    this.style.backgroundColor = `#${pixelColor}`;
+    if (lastPixel === this) return;
+
+    this.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    hue = (hue + hueIncr) % 360;
+    lastPixel = this;
 }
 
 function fillPixelOnClick(e) {
-    this.style.backgroundColor = `#${pixelColor}`;
+    this.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    hue = (hue + hueIncr) % 360;
 }
 
 
