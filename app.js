@@ -37,18 +37,21 @@ function drawGrid(gridDimension) {
         for (let j=0; j<gridDimension; j++) {
             const gridItem = document.createElement('div');
             gridItem.classList.add('grid-item');
-            gridItem.addEventListener('mousemove', fillPixel);
 
-
+            gridItem.addEventListener('mousemove', fillPixelOnMove);
+            gridItem.addEventListener('click', fillPixelOnClick);
 
             gridRow.appendChild(gridItem);
         }
     }
 }
 
-function fillPixel(e) {
+function fillPixelOnMove(e) {
     if (!isMouseDown) return;
+    this.style.backgroundColor = `#${pixelColor}`;
+}
 
+function fillPixelOnClick(e) {
     this.style.backgroundColor = `#${pixelColor}`;
 }
 
