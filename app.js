@@ -1,11 +1,10 @@
 const DEFAULT_GRID_DIMENSION = 16;
+let bgColor = 'white';
 
 const gridContainer = document.querySelector('.grid-container');
 const gridSizeSlider = document.querySelector('#grid-size-slider');
-
-window.addEventListener('load', () => {
-    drawGrid(DEFAULT_GRID_DIMENSION);
-});
+const gridSizeInfo = document.querySelector('#grid-size-info');
+const clearBtn = document.querySelector('#clear-grid-button');
 
 let isMouseDown = false;
 let lastPixel = null;
@@ -15,27 +14,29 @@ let hueIncr = 2;
 const saturation = 100;
 const lightness = 85;
 
-gridSizeSlider.addEventListener('mousemove', e => {
-    if (!isMouseDown) return;
 
-    const gridDimension = parseInt(e.target.value);
-    drawGrid(gridDimension);
+window.addEventListener('load', () => {
+    drawGrid(DEFAULT_GRID_DIMENSION);
 });
+
+clearBtn.addEventListener('click', clearGrid);
+
+gridSizeSlider.addEventListener('mousemove', e => isMouseDown && drawGrid(parseInt(e.target.value)));
+gridSizeSlider.addEventListener('change', e => drawGrid(parseInt(e.target.value)));
 
 window.addEventListener('mouseup', () => isMouseDown = false);
 window.addEventListener('mousedown', () => isMouseDown = true);
 
 
+
 function drawGrid(gridDimension) {
-    // reset grid
-    while (gridContainer.firstChild) { 
-        gridContainer.removeChild(gridContainer.firstChild);
-    }
+    removeGrid();
+
+    gridSizeInfo.textContent = `${gridDimension} x ${gridDimension}`;    
 
     for (let i=0; i<gridDimension; i++) {
-
         const gridRow = document.createElement('div');
-        gridRow.classList.add('grid-row');
+        gridRow.className = 'grid-row';
         gridRow.setAttribute('style', `grid-template-columns: repeat(${gridDimension}, 1fr)`);
         gridContainer.appendChild(gridRow);
 
@@ -65,5 +66,17 @@ function fillPixelOnClick(e) {
     hue = (hue + hueIncr) % 360;
 }
 
+function removeGrid() {
+    while (gridContainer.firstChild) { 
+        gridContainer.removeChild(gridContainer.firstChild);
+    }
+}
+
+function clearGrid() {
+    const gridRows = gridContainer.querySelectorAll('.grid-row');
+    gridRows.forEach(row => {
+        row.querySelectorAll('.grid-item').forEach(node => node.style.backgroundColor = bgColor);
+    });
+}
 
 
