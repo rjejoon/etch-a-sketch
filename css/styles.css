@@ -37,6 +37,10 @@ body {
     }
 }
 
+#grid-size-info {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .grid-row {
     display: grid;
     border-bottom: 1px solid var(--border-color);
