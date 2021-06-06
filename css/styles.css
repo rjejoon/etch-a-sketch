@@ -17,6 +17,11 @@ body {
     align-items: center;
 }
 
+#title {
+    font-family: 'Indie Flower', cursive;
+    font-size: 48px;
+}
+
 .grid-container {
     width: 600px;
     height: 600px;
@@ -34,6 +39,7 @@ body {
 
     .grid-container {
         width: 100%;
+        min-width: 400px;
     }
 }
 
