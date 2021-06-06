@@ -14,6 +14,12 @@ let hueIncr = 2;
 const saturation = 100;
 const lightness = 85;
 
+window.addEventListener('resize', e => {
+    // Keep the grid items square on smaller screens
+    if (this.innerWidth <= 600) {
+        gridContainer.style.height = window.getComputedStyle(gridContainer).width;
+    }
+});
 
 window.addEventListener('load', () => {
     drawGrid(DEFAULT_GRID_DIMENSION);
@@ -26,7 +32,6 @@ gridSizeSlider.addEventListener('change', e => drawGrid(parseInt(e.target.value)
 
 window.addEventListener('mouseup', () => isMouseDown = false);
 window.addEventListener('mousedown', () => isMouseDown = true);
-
 
 
 function drawGrid(gridDimension) {
