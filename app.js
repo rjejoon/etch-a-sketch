@@ -22,16 +22,25 @@ window.addEventListener('resize', e => {
 });
 
 window.addEventListener('load', () => {
+    if (this.innerWidth <= 600) {
+        gridContainer.style.height = window.getComputedStyle(gridContainer).width;
+    }
+
     drawGrid(DEFAULT_GRID_DIMENSION);
+
+    clearBtn.addEventListener('click', clearGrid);
+
+    gridSizeSlider.addEventListener('mousemove', e => isMouseDown && drawGrid(parseInt(e.target.value)));
+    gridSizeSlider.addEventListener('change', e => drawGrid(parseInt(e.target.value)));
+
+    gridContainer.addEventListener('touchstart', fillPixelOnTouchStart);
+    gridContainer.addEventListener('touchmove', fillPixelOnTouchMove);
+
+    window.addEventListener('mouseup', () => isMouseDown = false);
+    window.addEventListener('mousedown', () => isMouseDown = true);
 });
 
-clearBtn.addEventListener('click', clearGrid);
 
-gridSizeSlider.addEventListener('mousemove', e => isMouseDown && drawGrid(parseInt(e.target.value)));
-gridSizeSlider.addEventListener('change', e => drawGrid(parseInt(e.target.value)));
-
-window.addEventListener('mouseup', () => isMouseDown = false);
-window.addEventListener('mousedown', () => isMouseDown = true);
 
 
 function drawGrid(gridDimension) {
@@ -52,10 +61,35 @@ function drawGrid(gridDimension) {
             gridItem.addEventListener('mousemove', fillPixelOnMove);
             gridItem.addEventListener('click', fillPixelOnClick);
 
+
             gridRow.appendChild(gridItem);
         }
     }
 }
+
+function fillPixelOnTouchStart(e) {
+    const touches = e.touches;
+    const target = touches[0].target;
+    
+    if (!target) return;
+    if (!target.matches('.grid-item')) return;
+
+    target.style.background = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    hue = (hue + hueIncr) % 360;
+}
+
+function fillPixelOnTouchMove(e) {
+    e.preventDefault();
+    const touches = e.touches;
+    const target = document.elementFromPoint(touches[0].pageX, touches[0].pageY)
+
+    if (!target) return;
+    if (!target.matches('.grid-item')) return;
+
+    target.style.background = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    hue = (hue + hueIncr) % 360;
+}
+
 
 function fillPixelOnMove(e) {
     if (!isMouseDown) return;
@@ -64,6 +98,10 @@ function fillPixelOnMove(e) {
     this.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     hue = (hue + hueIncr) % 360;
     lastPixel = this;
+}
+
+function copyTouch ( { target, pageX, pageY }) {
+    return { target, pageX, pageY };
 }
 
 function fillPixelOnClick(e) {
