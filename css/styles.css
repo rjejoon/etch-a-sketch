@@ -17,8 +17,23 @@ body {
     align-items: center;
 }
 
+header {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 15%;
+
+    padding: 0 0 20px 0;
+}
+
+#clear-grid-button {
+    font-size: 18px;
+}
+
 #title {
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Raleway', sans-serif;
     font-size: 48px;
 }
 
@@ -37,14 +52,18 @@ body {
 
 @media only screen and (max-width: 600px) {
 
+    header {
+        height: 150px;
+
+    }
     .grid-container {
-        width: 100%;
-        min-width: 400px;
+        width: 100vw;
     }
 }
 
 #grid-size-info {
     font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
 }
 
 .grid-row {
